@@ -1,6 +1,7 @@
 package tw.ming.app.helloworid.myapp;
 
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -15,6 +17,7 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
+    private File sdroot,approot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("gamedata",MODE_PRIVATE);
         editor = sp.edit();
+
+        sdroot = Environment.getExternalStorageDirectory();
+        approot = new File(sdroot,"Android/data/"+getPackageName()+"/");
+        if(!approot.exists()){
+            approot.mkdir();
+        }
+
+//        String state = Environment.getExternalStorageState();//外存
+//        Log.i("ming",state);
+
+        File sd = Environment.getExternalStorageDirectory();//外存目錄
+        Log.i("ming",sd.getAbsolutePath());
     }
 
     public void test1(View view){
